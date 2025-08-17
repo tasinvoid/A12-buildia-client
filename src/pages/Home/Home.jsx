@@ -6,6 +6,8 @@ import LocationAndDirections from "./Location/LocationAndDirections";
 import Footer from "../shared/Footer/Footer";
 import InteractiveFloorPlan from "../InteractiveFloorPlan/InteractiveFloorPlan";
 import CommentSlider from "./CommentSlider/CommentSlider";
+import Facilities from "./Facilities/Facilities";
+import TeamSection from "./TeamSection/TeamSection";
 
 const Home = () => {
   return (
@@ -15,6 +17,8 @@ const Home = () => {
       <FloatingCoupons></FloatingCoupons>
       <LocationAndDirections></LocationAndDirections>
       <CommentSlider></CommentSlider>
+      <Facilities></Facilities>
+      <TeamSection></TeamSection>
       <Footer></Footer>
     </div>
   );
