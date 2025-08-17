@@ -1,7 +1,6 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
-// Adjust your axiosSecure hook path
-// Adjust your Auth hook path
+
 import {
   FaSpinner,
   FaHistory,
@@ -14,32 +13,29 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import UseAuth from "../../../hooks/UseAuth";
 
 const PaymentHistory = () => {
-  const { user, loading: authLoading } = UseAuth(); 
+  const { user, loading: authLoading } = UseAuth();
   const axiosSecure = useAxiosSecure();
 
- 
   const {
-    data: payments = [], 
+    data: payments = [],
     isPending,
     isError,
     error,
   } = useQuery({
-    queryKey: ["payments", user?.email], 
+    queryKey: ["payments", user?.email],
     queryFn: async () => {
       if (!user?.email) {
-        
         return [];
       }
-      
+
       const res = await axiosSecure.get(`/payments?email=${user.email}`);
       return res.data;
     },
-    enabled: !!user?.email && !authLoading, 
-    staleTime: 5 * 60 * 1000, 
-    cacheTime: 10 * 60 * 1000, 
+    enabled: !!user?.email && !authLoading,
+    staleTime: 5 * 60 * 1000,
+    cacheTime: 10 * 60 * 1000,
   });
 
-  // --- Loading States ---
   if (authLoading || isPending) {
     return (
       <div className="min-h-screen flex items-center justify-center p-5 bg-gradient-to-br from-gray-950 via-gray-900 to-indigo-950 text-gray-100">
@@ -49,7 +45,6 @@ const PaymentHistory = () => {
     );
   }
 
-  // --- Error State ---
   if (isError) {
     return (
       <div className="min-h-screen flex items-center justify-center p-5 bg-gradient-to-br from-gray-950 via-gray-900 to-indigo-950 text-red-400 text-xl text-center">
@@ -63,14 +58,12 @@ const PaymentHistory = () => {
     );
   }
 
-  // --- No User Logged In ---
   if (!user) {
     return (
       <div className="min-h-screen flex items-center justify-center p-5 bg-gradient-to-br from-gray-950 via-gray-900 to-indigo-950 text-gray-100 text-xl text-center">
         <p className="text-pink-400 mb-4">
           Please log in to view your payment details.
         </p>
-       
       </div>
     );
   }
@@ -123,10 +116,7 @@ const PaymentHistory = () => {
                     className="hover:bg-gray-800 transition duration-200"
                   >
                     <td className="py-4 px-6 text-gray-200 text-sm">
-                      {format(
-                        new Date(payment.paymentDate),
-                        "MMM dd, yyyy "
-                      )}
+                      {format(new Date(payment.paymentDate), "MMM dd, yyyy ")}
                     </td>
                     <td className="py-4 px-6 text-indigo-400 font-semibold text-sm">
                       ${payment.paidAmount}
