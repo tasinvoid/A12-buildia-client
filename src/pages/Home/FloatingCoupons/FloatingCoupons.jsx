@@ -2,16 +2,12 @@ import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { EffectCards, Pagination, Navigation, Autoplay } from "swiper/modules";
 
-
 import "swiper/css";
 import "swiper/css/effect-cards";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 
-
-
 import { format } from "date-fns";
-
 
 import { useQuery } from "@tanstack/react-query";
 
@@ -20,25 +16,22 @@ import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import { FiCalendar, FiCopy, FiTag } from "react-icons/fi";
 import Swal from "sweetalert2";
 
-
 const FloatingCoupons = () => {
   const axiosPublic = useAxiosPublic();
 
-  
   const {
     isPending,
     isError,
-    data: coupons = [], 
+    data: coupons = [],
     error,
   } = useQuery({
-    queryKey: ["coupons"], 
+    queryKey: ["coupons"],
     queryFn: async () => {
-      
-      const res = await axiosPublic.get("/coupons"); 
+      const res = await axiosPublic.get("/coupons");
       return res.data;
     },
-    staleTime: 5 * 60 * 1000, 
-    cacheTime: 10 * 60 * 1000, 
+    staleTime: 5 * 60 * 1000,
+    cacheTime: 10 * 60 * 1000,
   });
 
   const handleCopyCode = (code) => {
@@ -49,18 +42,16 @@ const FloatingCoupons = () => {
       title: "Copied Coupon Code",
       showConfirmButton: false,
       timer: 1500,
-    }); 
+    });
   };
 
-  
   const activeCoupons = coupons.filter((coupon) => {
     const today = new Date();
     const validUntilDate = new Date(coupon.validUntil);
-    
+
     return coupon.isActive && validUntilDate >= today;
   });
 
-  
   if (isPending) {
     return (
       <div
@@ -73,7 +64,6 @@ const FloatingCoupons = () => {
     );
   }
 
-  
   if (isError) {
     return (
       <div
@@ -97,7 +87,7 @@ const FloatingCoupons = () => {
         className="p-6 rounded-2xl shadow-2xl flex flex-col md:flex-row items-center
                       max-w-6xl w-full bg-gray-800 border border-gray-700 backdrop-blur-sm bg-opacity-80"
       >
-        {/* Left Section - Text Content */}
+        {}
         <div className="w-full md:w-2/3 md:pr-8 mb-8 md:mb-0 text-gray-300">
           <h3 className="font-bold text-4xl mb-4 text-center md:text-left text-indigo-400 drop-shadow-lg">
             Grab Your Exclusive Coupons!
@@ -114,7 +104,7 @@ const FloatingCoupons = () => {
           </p>
         </div>
 
-        {/* Right Section - Swiper */}
+        {}
         <div className="w-full md:w-1/3 flex justify-center items-center">
           {activeCoupons.length > 0 ? (
             <Swiper
@@ -128,12 +118,12 @@ const FloatingCoupons = () => {
             >
               {activeCoupons.map((coupon) => (
                 <SwiperSlide
-                  key={coupon.couponCode} 
+                  key={coupon.couponCode}
                   className="card bg-gray-700 shadow-xl transform hover:scale-105
                              transition-transform duration-300 relative overflow-hidden
                              rounded-lg border border-gray-600 flex flex-col justify-between"
                 >
-                  {/* Color stripe on the left */}
+                  {}
                   <div
                     className={`absolute inset-y-0 left-0 w-2
                                   ${

@@ -1,16 +1,13 @@
-
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useQuery } from "@tanstack/react-query";
-import React, { useState, useEffect } from "react"; 
-import { useParams } from "react-router"; 
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import { FaSpinner, FaCreditCard } from "react-icons/fa";
 import { motion } from "framer-motion";
 
-
-import CouponInput from './CouponInput'; 
-
+import CouponInput from "./CouponInput";
 
 const itemVariants = {
   hidden: { y: 20, opacity: 0 },
@@ -20,7 +17,7 @@ const itemVariants = {
     transition: {
       type: "spring",
       stiffness: 100,
-      damping: 10
+      damping: 10,
     },
   },
 };
@@ -30,9 +27,9 @@ const CheckoutForm = () => {
   const elements = useElements();
   const axiosSecure = useAxiosSecure();
   const [cardError, setCardError] = useState(null);
-  const [processing, setProcessing] = useState(false); 
-  const [clientSecret, setClientSecret] = useState(''); 
-  const [appliedCoupon, setAppliedCoupon] = useState(null); 
+  const [processing, setProcessing] = useState(false);
+  const [clientSecret, setClientSecret] = useState("");
+  const [appliedCoupon, setAppliedCoupon] = useState(null);
 
   const { paymentId } = useParams();
 
@@ -49,53 +46,50 @@ const CheckoutForm = () => {
       );
       return result.data;
     },
-    enabled: !!paymentId, 
-    staleTime: 5 * 60 * 1000, 
-    cacheTime: 10 * 60 * 1000, 
+    enabled: !!paymentId,
+    staleTime: 5 * 60 * 1000,
+    cacheTime: 10 * 60 * 1000,
   });
 
-  
   const originalAmount = currentPaymentInfo?.rentAmount || 0;
-  const amountToPay = appliedCoupon ? (originalAmount - appliedCoupon.discountAmount) : originalAmount;
+  const amountToPay = appliedCoupon
+    ? originalAmount - appliedCoupon.discountAmount
+    : originalAmount;
   const amountInCents = amountToPay * 100;
 
-  
   useEffect(() => {
-    if (amountToPay > 0 && originalAmount > 0) { 
+    if (amountToPay > 0 && originalAmount > 0) {
       setProcessing(true);
       setCardError(null);
-      axiosSecure.post('/create-payment-intent', { amount: amountInCents })
-        .then(res => {
+      axiosSecure
+        .post("/create-payment-intent", { amount: amountInCents })
+        .then((res) => {
           setClientSecret(res.data.clientSecret);
           setProcessing(false);
         })
-        .catch(err => {
+        .catch((err) => {
           console.error("Error fetching client secret:", err);
           setCardError("Failed to initialize payment. Please try again.");
           Swal.fire({
-            icon: 'error',
-            title: 'Payment Error!',
-            text: 'Could not prepare payment. Please try again later.',
-            confirmButtonColor: '#EC4899', 
-            background: '#1F2937', 
-            color: '#D1D5DB',     
+            icon: "error",
+            title: "Payment Error!",
+            text: "Could not prepare payment. Please try again later.",
+            confirmButtonColor: "#EC4899",
+            background: "#1F2937",
+            color: "#D1D5DB",
           });
           setProcessing(false);
         });
-    } else if (originalAmount === 0) { 
-        setClientSecret(''); 
-        setProcessing(false);
+    } else if (originalAmount === 0) {
+      setClientSecret("");
+      setProcessing(false);
     }
-  }, [amountToPay, originalAmount, axiosSecure]); 
+  }, [amountToPay, originalAmount, axiosSecure]);
 
   const handleCouponApply = (couponInfo) => {
     setAppliedCoupon(couponInfo);
-    
-    
   };
 
-
-  
   if (isPending) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-950 via-gray-900 to-indigo-950 text-gray-100">
@@ -105,7 +99,6 @@ const CheckoutForm = () => {
     );
   }
 
-  
   if (isError) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-950 via-gray-900 to-indigo-950 text-red-400 text-xl p-5 text-center">
@@ -121,48 +114,49 @@ const CheckoutForm = () => {
     event.preventDefault();
 
     if (amountToPay <= 0) {
-        
+      Swal.fire({
+        icon: "success",
+        title: "Payment Not Required!",
+        text: "Your rent is fully covered by the coupon. No payment is needed.",
+        confirmButtonColor: "#4F46E5",
+        background: "#1F2937",
+        color: "#D1D5DB",
+      });
+
+      const freePaymentData = {
+        transactionId: "COUPON_FULL_DISCOUNT_" + Date.now(),
+        paymentDate: new Date(),
+        paymentStatus: "paid_by_coupon",
+        apartmentId: currentPaymentInfo.apartmentId,
+        userEmail: currentPaymentInfo.userEmail,
+        rentAmount: 0,
+        originalRentAmount: originalAmount,
+        couponCode: appliedCoupon?.code,
+        month: currentPaymentInfo.month,
+        year: currentPaymentInfo.year,
+      };
+      try {
+        await axiosSecure.patch(
+          `/updatePaymentRecord?paymentId=${currentPaymentInfo._id}`,
+          freePaymentData
+        );
+      } catch (err) {
+        console.error("Error recording free payment:", err);
         Swal.fire({
-            icon: 'success',
-            title: 'Payment Not Required!',
-            text: 'Your rent is fully covered by the coupon. No payment is needed.',
-            confirmButtonColor: '#4F46E5',
-            background: '#1F2937',
-            color: '#D1D5DB',
+          icon: "error",
+          title: "Error Recording Free Payment!",
+          text:
+            "Please contact support regarding your fully discounted rent. Transaction ID: " +
+            freePaymentData.transactionId,
+          confirmButtonColor: "#EC4899",
+          background: "#1F2937",
+          color: "#D1D5DB",
         });
-        
-        const freePaymentData = {
-            transactionId: 'COUPON_FULL_DISCOUNT_' + Date.now(),
-            paymentDate: new Date(),
-            paymentStatus: 'paid_by_coupon',
-            apartmentId: currentPaymentInfo.apartmentId,
-            userEmail: currentPaymentInfo.userEmail,
-            rentAmount: 0, 
-            originalRentAmount: originalAmount,
-            couponCode: appliedCoupon?.code,
-            month: currentPaymentInfo.month,
-            year: currentPaymentInfo.year,
-        };
-        try {
-            await axiosSecure.patch(`/updatePaymentRecord?paymentId=${currentPaymentInfo._id}`, freePaymentData);
-            
-        } catch (err) {
-            console.error("Error recording free payment:", err);
-            Swal.fire({
-                icon: 'error',
-                title: 'Error Recording Free Payment!',
-                text: 'Please contact support regarding your fully discounted rent. Transaction ID: ' + freePaymentData.transactionId,
-                confirmButtonColor: '#EC4899',
-                background: '#1F2937',
-                color: '#D1D5DB',
-            });
-        }
-        return;
+      }
+      return;
     }
 
-
     if (!stripe || !elements || !clientSecret) {
-      
       setCardError("Payment system not ready. Please wait a moment.");
       return;
     }
@@ -178,17 +172,15 @@ const CheckoutForm = () => {
       return;
     }
 
-    const { error: confirmPaymentError, paymentIntent } = await stripe.confirmCardPayment(
-      clientSecret,
-      {
+    const { error: confirmPaymentError, paymentIntent } =
+      await stripe.confirmCardPayment(clientSecret, {
         payment_method: {
           card: card,
           billing_details: {
-            email: currentPaymentInfo.userEmail, 
+            email: currentPaymentInfo.userEmail,
           },
         },
-      }
-    );
+      });
 
     if (confirmPaymentError) {
       console.error("[Stripe error]", confirmPaymentError);
@@ -197,23 +189,22 @@ const CheckoutForm = () => {
         icon: "error",
         title: "Payment Failed!",
         text: confirmPaymentError.message,
-        confirmButtonColor: "#EC4899", 
-        background: "#1F2937", 
-        color: "#D1D5DB", 
+        confirmButtonColor: "#EC4899",
+        background: "#1F2937",
+        color: "#D1D5DB",
       });
       setProcessing(false);
     } else if (paymentIntent && paymentIntent.status === "succeeded") {
       console.log("[PaymentIntent]", paymentIntent);
 
-      
       const paymentData = {
         transactionId: paymentIntent.id,
         paymentDate: new Date(),
         paymentStatus: "paid",
-        paidAmount: amountToPay, 
-        originalRentAmount: originalAmount, 
-        couponCode: appliedCoupon ? appliedCoupon.code : null, 
-        discountAmount: appliedCoupon ? appliedCoupon.discountAmount : 0, 
+        paidAmount: amountToPay,
+        originalRentAmount: originalAmount,
+        couponCode: appliedCoupon ? appliedCoupon.code : null,
+        discountAmount: appliedCoupon ? appliedCoupon.discountAmount : 0,
       };
       try {
         const updateRes = await axiosSecure.patch(
@@ -226,13 +217,10 @@ const CheckoutForm = () => {
             icon: "success",
             title: "Payment Successful!",
             text: `Rent for ${currentPaymentInfo.month} has been paid. Transaction ID: ${paymentIntent.id}`,
-            confirmButtonColor: "#4F46E5", 
-            background: "#1F2937", 
-            color: "#D1D5DB", 
+            confirmButtonColor: "#4F46E5",
+            background: "#1F2937",
+            color: "#D1D5DB",
           });
-          
-          
-          
         } else {
           Swal.fire({
             icon: "warning",
@@ -263,26 +251,27 @@ const CheckoutForm = () => {
     }
   };
 
-  
   const cardStyle = {
     base: {
-      color: '#F3F4F6', 
-      fontFamily: 'Arial, sans-serif',
-      fontSmoothing: 'antialiased',
-      fontSize: '16px',
-      '::placeholder': {
-        color: '#9CA3AF', 
+      color: "#F3F4F6",
+      fontFamily: "Arial, sans-serif",
+      fontSmoothing: "antialiased",
+      fontSize: "16px",
+      "::placeholder": {
+        color: "#9CA3AF",
       },
     },
     invalid: {
-      color: '#F472B6', 
-      iconColor: '#F472B6',
+      color: "#F472B6",
+      iconColor: "#F472B6",
     },
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-5
-                    bg-gradient-to-br from-gray-950 via-gray-900 to-indigo-950">
+    <div
+      className="min-h-screen flex items-center justify-center p-5
+                    bg-gradient-to-br from-gray-950 via-gray-900 to-indigo-950"
+    >
       <motion.div
         variants={itemVariants}
         initial="hidden"
@@ -290,8 +279,10 @@ const CheckoutForm = () => {
         className="max-w-md w-full bg-gray-800 p-8 rounded-2xl shadow-2xl
                    border border-gray-700 backdrop-blur-sm bg-opacity-80"
       >
-        <h2 className="text-3xl font-bold text-center mb-8
-                       text-indigo-400 drop-shadow-lg flex items-center justify-center gap-2">
+        <h2
+          className="text-3xl font-bold text-center mb-8
+                       text-indigo-400 drop-shadow-lg flex items-center justify-center gap-2"
+        >
           <FaCreditCard className="text-pink-400" /> Complete Your Payment
         </h2>
 
@@ -303,7 +294,8 @@ const CheckoutForm = () => {
             </span>
           </p>
           <p className="text-gray-100 text-3xl font-extrabold mt-2">
-            Original Amount: <span className="text-pink-400">${originalAmount.toFixed(2)}</span>
+            Original Amount:{" "}
+            <span className="text-pink-400">${originalAmount.toFixed(2)}</span>
           </p>
           {appliedCoupon && (
             <motion.p
@@ -311,54 +303,62 @@ const CheckoutForm = () => {
               animate={{ opacity: 1, y: 0 }}
               className="text-gray-300 text-xl font-bold mt-2"
             >
-              Discount: <span className="text-green-400">-${appliedCoupon.discountAmount.toFixed(2)}</span>
+              Discount:{" "}
+              <span className="text-green-400">
+                -${appliedCoupon.discountAmount.toFixed(2)}
+              </span>
             </motion.p>
           )}
           <p className="text-gray-100 text-4xl font-extrabold mt-2">
-            Total Payable: <span className="text-indigo-400">${amountToPay.toFixed(2)}</span>
+            Total Payable:{" "}
+            <span className="text-indigo-400">${amountToPay.toFixed(2)}</span>
           </p>
         </div>
 
-        {/* Coupon Input Component */}
+        {}
         <CouponInput
           onCouponApply={handleCouponApply}
           initialAmount={originalAmount}
           appliedCoupon={appliedCoupon}
         />
 
-        <form onSubmit={handleSubmit} className="space-y-6 mt-6"> {/* Added mt-6 for spacing */}
-          {amountToPay > 0 && ( 
+        <form onSubmit={handleSubmit} className="space-y-6 mt-6">
+          {" "}
+          {}
+          {amountToPay > 0 && (
             <div className="p-4 rounded-lg bg-gray-900 border border-gray-700 shadow-inner">
               <CardElement options={{ style: cardStyle }} />
             </div>
           )}
-
           {cardError && (
             <p className="text-pink-400 text-sm text-center font-medium bg-gray-800 p-2 rounded-md border border-pink-500">
               {cardError}
             </p>
           )}
-
           <button
             type="submit"
             className="w-full py-3 px-6 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg shadow-md
                        transition duration-300 ease-in-out transform hover:scale-105
                        flex items-center justify-center gap-2"
             disabled={
-                processing || (amountToPay > 0 && (!stripe || !elements || !clientSecret))
+              processing ||
+              (amountToPay > 0 && (!stripe || !elements || !clientSecret))
             }
           >
             {processing ? (
               <>
                 <FaSpinner className="animate-spin" /> Processing Payment...
               </>
-            ) : (amountToPay > 0 ? (
+            ) : amountToPay > 0 ? (
               <>
-                <FaCreditCard className="text-lg" /> Pay ${amountToPay.toFixed(2)}
+                <FaCreditCard className="text-lg" /> Pay $
+                {amountToPay.toFixed(2)}
               </>
             ) : (
-                <> <FaCheckCircle className="text-lg" /> Confirm Free Payment </>
-            )
+              <>
+                {" "}
+                <FaCheckCircle className="text-lg" /> Confirm Free Payment{" "}
+              </>
             )}
           </button>
         </form>

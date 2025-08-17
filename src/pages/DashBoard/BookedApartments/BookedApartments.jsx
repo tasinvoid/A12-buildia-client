@@ -10,14 +10,10 @@ import {
 } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
-
 const queryClient = new QueryClient();
 
-
 const BookedApartments = () => {
-
   const axiosSecure = useAxiosSecure();
-
 
   const {
     data: agreements,
@@ -34,7 +30,6 @@ const BookedApartments = () => {
     },
   });
 
-
   const updateAgreementMutation = useMutation({
     mutationFn: async ({ email, payload }) => {
       const response = await axiosSecure.patch(
@@ -44,7 +39,6 @@ const BookedApartments = () => {
       return response.data;
     },
     onSuccess: (data, variables) => {
-
       queryClient.invalidateQueries({ queryKey: ["pendingAgreements", data] });
 
       Swal.fire({
@@ -123,9 +117,9 @@ const BookedApartments = () => {
   return (
     <div
       className="min-h-screen flex flex-col items-center p-4 sm:p-6 lg:p-8
-                 bg-gradient-to-br from-gray-950 via-gray-900 to-indigo-950 relative overflow-hidden" // Added relative and overflow-hidden for circles
+                 bg-gradient-to-br from-gray-950 via-gray-900 to-indigo-950 relative overflow-hidden"
     >
-      {/* Decorative Circles */}
+      {}
       <div className="absolute top-1/4 left-1/4 w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-30"></div>
       <div className="absolute top-1/2 left-1/2 w-28 h-28 sm:w-36 sm:h-36 md:w-48 md:h-48 bg-indigo-600 rounded-full mix-blend-multiply filter blur-xl opacity-30 -translate-x-1/2 -translate-y-1/2"></div>
       <div className="absolute bottom-1/4 right-1/4 w-32 h-32 sm:w-40 sm:h-40 md:w-52 md:h-52 bg-pink-400 rounded-full mix-blend-multiply filter blur-xl opacity-30"></div>
@@ -138,19 +132,17 @@ const BookedApartments = () => {
           className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-center mb-6 sm:mb-10
                        text-indigo-400 tracking-wide drop-shadow-lg"
         >
-          <FaCheckCircle className="inline-block mr-2 sm:mr-4 text-pink-400 text-2xl sm:text-3xl md:text-4xl align-middle" /> Manage
-          Apartment Agreements
+          <FaCheckCircle className="inline-block mr-2 sm:mr-4 text-pink-400 text-2xl sm:text-3xl md:text-4xl align-middle" />{" "}
+          Manage Apartment Agreements
         </h2>
 
         {agreements.length === 0 ? (
-          <p
-            className="text-gray-300 text-center text-lg sm:text-xl mt-6 sm:mt-8 px-4"
-          >
+          <p className="text-gray-300 text-center text-lg sm:text-xl mt-6 sm:mt-8 px-4">
             No pending apartment agreements found.
           </p>
         ) : (
           <>
-            {/* Desktop/Tablet Table View */}
+            {}
             <div className="overflow-x-auto rounded-lg border border-gray-700 hidden md:block">
               <table className="min-w-full divide-y divide-gray-700">
                 <thead className="bg-gray-900">
@@ -239,7 +231,8 @@ const BookedApartments = () => {
                                        hover:bg-indigo-700 transition duration-200 flex items-center gap-1 text-xs sm:text-base"
                             disabled={updateAgreementMutation.isPending}
                           >
-                            <FaCheckCircle /> <span className="sm:hidden">Accept</span>
+                            <FaCheckCircle />{" "}
+                            <span className="sm:hidden">Accept</span>
                           </button>
                           <button
                             onClick={() =>
@@ -255,7 +248,8 @@ const BookedApartments = () => {
                                        hover:bg-pink-600 transition duration-200 flex items-center gap-1 text-xs sm:text-base"
                             disabled={updateAgreementMutation.isPending}
                           >
-                            <FaTimesCircle /> <span className="sm:hidden">Reject</span>
+                            <FaTimesCircle />{" "}
+                            <span className="sm:hidden">Reject</span>
                           </button>
                         </div>
                       </td>
@@ -265,24 +259,31 @@ const BookedApartments = () => {
               </table>
             </div>
 
-            {/* Mobile Card View */}
-            <div className="md:hidden space-y-4 px-2"> {/* Added px-2 for inner spacing on small screens */}
+            {}
+            <div className="md:hidden space-y-4 px-2">
+              {" "}
+              {}
               {agreements.map((agreement) => (
                 <div
                   key={agreement._id}
                   className="bg-gray-800 p-4 rounded-lg shadow border border-gray-700"
                 >
                   <p className="text-gray-200 mb-1">
-                    <strong className="text-indigo-400">User:</strong> {agreement.currentTenantName}
+                    <strong className="text-indigo-400">User:</strong>{" "}
+                    {agreement.currentTenantName}
                   </p>
                   <p className="text-gray-300 mb-1 text-sm">
-                    <strong className="text-pink-400">Email:</strong> {agreement.currentTenantEmail}
+                    <strong className="text-pink-400">Email:</strong>{" "}
+                    {agreement.currentTenantEmail}
                   </p>
                   <p className="text-gray-300 mb-1 text-sm">
-                    <strong className="text-gray-400">Apartment:</strong> {agreement.ApartmentNo} (Floor: {agreement.FloorNo}, Block: {agreement.BlockName})
+                    <strong className="text-gray-400">Apartment:</strong>{" "}
+                    {agreement.ApartmentNo} (Floor: {agreement.FloorNo}, Block:{" "}
+                    {agreement.BlockName})
                   </p>
                   <p className="text-gray-300 mb-4 text-sm">
-                    <strong className="text-gray-400">Rent:</strong> ${agreement.Rent}
+                    <strong className="text-gray-400">Rent:</strong> $
+                    {agreement.Rent}
                   </p>
                   <div className="flex flex-col space-y-2 mt-4 border-t border-gray-700 pt-4">
                     <button

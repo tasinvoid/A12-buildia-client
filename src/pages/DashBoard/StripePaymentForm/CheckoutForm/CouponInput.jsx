@@ -19,7 +19,7 @@ const itemVariants = {
 };
 
 const CouponInput = ({ onCouponApply, initialAmount, appliedCoupon }) => {
-  const axiosSecure = useAxiosSecure()
+  const axiosSecure = useAxiosSecure();
   const [couponCode, setCouponCode] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState(null);
@@ -85,9 +85,7 @@ const CouponInput = ({ onCouponApply, initialAmount, appliedCoupon }) => {
         "Error applying coupon:",
         error.response ? error.response.data : error.message
       );
-      const errorMessage =
-        error.response?.data?.message ||
-        "Coupon Error";
+      const errorMessage = error.response?.data?.message || "Coupon Error";
       onCouponApply(null);
       setMessage(errorMessage);
       setMessageType("error");
@@ -129,7 +127,7 @@ const CouponInput = ({ onCouponApply, initialAmount, appliedCoupon }) => {
         <FaTag className="text-pink-400" /> Apply Coupon
       </h3>
 
-      {/* Conditional rendering based on whether a coupon is applied */}
+      {}
       {!appliedCoupon ? (
         <div className="flex flex-col sm:flex-row gap-3">
           <input
@@ -170,7 +168,6 @@ const CouponInput = ({ onCouponApply, initialAmount, appliedCoupon }) => {
             <span className="font-bold text-indigo-400">
               "{appliedCoupon.code}"
             </span>{" "}
-           
           </span>
           <button
             onClick={handleRemoveCoupon}
@@ -183,7 +180,7 @@ const CouponInput = ({ onCouponApply, initialAmount, appliedCoupon }) => {
         </div>
       )}
 
-      {/* Display messages (success, error, info) */}
+      {}
       {message && (
         <motion.p
           initial={{ opacity: 0, y: -10 }}
@@ -202,7 +199,7 @@ const CouponInput = ({ onCouponApply, initialAmount, appliedCoupon }) => {
         </motion.p>
       )}
 
-      {/* Display applied coupon's discount details if available */}
+      {}
       {appliedCoupon && (
         <motion.p
           initial={{ opacity: 0, y: 10 }}

@@ -101,7 +101,8 @@ const MembersManagement = () => {
     <div className="min-h-screen p-4 sm:p-6 lg:p-8 bg-gradient-to-br from-gray-950 via-gray-900 to-indigo-950 text-gray-100">
       <div className="max-w-xs sm:max-w-xl md:max-w-4xl mx-auto bg-gray-800 bg-opacity-80 backdrop-blur-sm rounded-lg shadow-2xl p-4 sm:p-6 md:p-8 border border-gray-700">
         <h2 className="text-3xl sm:text-4xl font-bold text-center mb-6 sm:mb-10 text-indigo-400 drop-shadow-lg flex items-center justify-center gap-2 sm:gap-3">
-          <FaUsers className="text-pink-400 text-2xl sm:text-3xl" /> Manage Members
+          <FaUsers className="text-pink-400 text-2xl sm:text-3xl" /> Manage
+          Members
         </h2>
 
         {members.length === 0 ? (
@@ -115,18 +116,28 @@ const MembersManagement = () => {
           </div>
         ) : (
           <>
-            {/* Desktop/Tablet Table View (NO horizontal scroll) */}
-            <div className="hidden md:block"> {/* Removed overflow-x-auto here */}
-              <table className="min-w-full bg-gray-900 rounded-lg overflow-hidden border border-gray-700 table-fixed"> {/* Added table-fixed */}
+            {}
+            <div className="hidden md:block">
+              {" "}
+              {}
+              <table className="min-w-full bg-gray-900 rounded-lg overflow-hidden border border-gray-700 table-fixed">
+                {" "}
+                {}
                 <thead className="bg-gray-700 border-b border-gray-600">
                   <tr>
-                    <th className="py-3 px-4 sm:px-6 text-left text-xs sm:text-sm font-semibold text-gray-300 uppercase tracking-wider w-1/3"> {/* Added w-1/3 for distribution */}
+                    <th className="py-3 px-4 sm:px-6 text-left text-xs sm:text-sm font-semibold text-gray-300 uppercase tracking-wider w-1/3">
+                      {" "}
+                      {}
                       User Name
                     </th>
-                    <th className="py-3 px-4 sm:px-6 text-left text-xs sm:text-sm font-semibold text-gray-300 uppercase tracking-wider w-1/3"> {/* Added w-1/3 */}
+                    <th className="py-3 px-4 sm:px-6 text-left text-xs sm:text-sm font-semibold text-gray-300 uppercase tracking-wider w-1/3">
+                      {" "}
+                      {}
                       User Email
                     </th>
-                    <th className="py-3 px-4 sm:px-6 text-center text-xs sm:text-sm font-semibold text-gray-300 uppercase tracking-wider w-1/3"> {/* Added w-1/3 */}
+                    <th className="py-3 px-4 sm:px-6 text-center text-xs sm:text-sm font-semibold text-gray-300 uppercase tracking-wider w-1/3">
+                      {" "}
+                      {}
                       Action
                     </th>
                   </tr>
@@ -137,10 +148,14 @@ const MembersManagement = () => {
                       key={member._id}
                       className="hover:bg-gray-800 transition duration-200"
                     >
-                      <td className="py-3 px-4 sm:px-6 text-gray-200 text-sm break-words"> {/* Added break-words */}
+                      <td className="py-3 px-4 sm:px-6 text-gray-200 text-sm break-words">
+                        {" "}
+                        {}
                         {member.name || "N/A"}
                       </td>
-                      <td className="py-3 px-4 sm:px-6 text-indigo-400 font-semibold text-sm break-words"> {/* Added break-words */}
+                      <td className="py-3 px-4 sm:px-6 text-indigo-400 font-semibold text-sm break-words">
+                        {" "}
+                        {}
                         {member.email}
                       </td>
                       <td className="py-3 px-4 sm:px-6 text-center">
@@ -164,7 +179,7 @@ const MembersManagement = () => {
               </table>
             </div>
 
-            {/* Mobile Card View (NO horizontal scroll) */}
+            {}
             <div className="md:hidden space-y-4">
               {members.map((member) => (
                 <div
@@ -172,7 +187,8 @@ const MembersManagement = () => {
                   className="bg-gray-900 p-4 rounded-lg shadow border border-gray-700"
                 >
                   <p className="text-gray-200 text-lg font-semibold mb-1 break-words">
-                    <span className="text-indigo-400">Name:</span> {member.name || "N/A"}
+                    <span className="text-indigo-400">Name:</span>{" "}
+                    {member.name || "N/A"}
                   </p>
                   <p className="text-gray-300 text-sm mb-3 break-words">
                     <span className="text-pink-400">Email:</span> {member.email}

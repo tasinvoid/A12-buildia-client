@@ -42,11 +42,10 @@ const Footer = () => {
     >
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 border-b border-gray-700 dark:border-gray-800 pb-8 mb-8">
-          {/* About Section */}
+          {}
           <motion.div variants={itemVariants}>
             <span className="flex items-center justify-center">
               <BuildiaLogo></BuildiaLogo>{" "}
-             
             </span>
 
             <p className="text-sm leading-relaxed">
@@ -56,7 +55,7 @@ const Footer = () => {
             </p>
           </motion.div>
 
-          {/* Quick Links Section */}
+          {}
           <motion.div variants={itemVariants}>
             <h4 className="text-xl font-semibold text-white mb-4">
               Quick Links
@@ -105,7 +104,7 @@ const Footer = () => {
             </ul>
           </motion.div>
 
-          {/* Contact Us Section */}
+          {}
           <motion.div variants={itemVariants}>
             <h4 className="text-xl font-semibold text-white mb-4">
               Contact Us
@@ -116,7 +115,7 @@ const Footer = () => {
                   href="tel:+880123456789"
                   className="hover:text-blue-500 transition duration-300 flex items-center"
                 >
-                  <MdPhone className="w-5 h-5 mr-2" /> {/* React Icon */}
+                  <MdPhone className="w-5 h-5 mr-2" /> {}
                   +880 123 456 789
                 </a>
               </li>
@@ -125,13 +124,12 @@ const Footer = () => {
                   href="mailto:info@buildiatowers.com"
                   className="hover:text-blue-500 transition duration-300 flex items-center"
                 >
-                  <MdEmail className="w-5 h-5 mr-2" /> {/* React Icon */}
+                  <MdEmail className="w-5 h-5 mr-2" /> {}
                   info@buildiatowers.com
                 </a>
               </li>
               <li className="flex items-start">
-                <MdLocationOn className="w-5 h-5 mr-2 mt-1 flex-shrink-0" />{" "}
-                {/* React Icon */}
+                <MdLocationOn className="w-5 h-5 mr-2 mt-1 flex-shrink-0" /> {}
                 <address className="not-italic">
                   123/A, Green Road, Dhanmondi,
                   <br />
@@ -141,7 +139,7 @@ const Footer = () => {
             </ul>
           </motion.div>
 
-          {/* Social Media Section */}
+          {}
           <motion.div variants={itemVariants}>
             <h4 className="text-xl font-semibold text-white mb-4">Follow Us</h4>
             <div className="flex space-x-4">
@@ -151,7 +149,7 @@ const Footer = () => {
                 rel="noopener noreferrer"
                 className="text-gray-400 hover:text-blue-600 transition duration-300"
               >
-                <FaFacebook className="w-8 h-8" /> {/* React Icon */}
+                <FaFacebook className="w-8 h-8" /> {}
               </a>
               <a
                 href="https://twitter.com/buildiatowers"
@@ -159,7 +157,7 @@ const Footer = () => {
                 rel="noopener noreferrer"
                 className="text-gray-400 hover:text-blue-400 transition duration-300"
               >
-                <FaTwitter className="w-8 h-8" /> {/* React Icon */}
+                <FaTwitter className="w-8 h-8" /> {}
               </a>
               <a
                 href="https://linkedin.com/company/buildiatowers"
@@ -167,7 +165,7 @@ const Footer = () => {
                 rel="noopener noreferrer"
                 className="text-gray-400 hover:text-blue-700 transition duration-300"
               >
-                <FaLinkedin className="w-8 h-8" /> {/* React Icon */}
+                <FaLinkedin className="w-8 h-8" /> {}
               </a>
               <a
                 href="https://instagram.com/buildiatowers"
@@ -175,13 +173,13 @@ const Footer = () => {
                 rel="noopener noreferrer"
                 className="text-gray-400 hover:text-pink-500 transition duration-300"
               >
-                <FaInstagram className="w-8 h-8" /> {/* React Icon */}
+                <FaInstagram className="w-8 h-8" /> {}
               </a>
             </div>
           </motion.div>
         </div>
 
-        {/* Copyright Section */}
+        {}
         <motion.div
           className="text-center text-sm text-gray-500 dark:text-gray-600 pt-8 border-t border-gray-800 dark:border-gray-700 mt-8"
           variants={itemVariants}

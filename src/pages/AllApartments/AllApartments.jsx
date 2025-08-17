@@ -47,7 +47,7 @@ const AllApartments = () => {
     queryResult?.count !== undefined ? queryResult.count : initialCount;
 
   const numberOfPages = Math.ceil(totalItems / itemsPerPage) || 1;
-  const pages = Array.from({ length: numberOfPages }, (_, i) => i + 1); // 1-based page numbers
+  const pages = Array.from({ length: numberOfPages }, (_, i) => i + 1);
 
   console.log("Pages array:", pages);
 
@@ -118,7 +118,9 @@ const AllApartments = () => {
             onChange={handleMinValue}
             value={currentMinValue === undefined ? "" : currentMinValue}
           >
-            <option value={1200} style={{ paddingRight: '1rem' }}>Min</option>
+            <option value={1200} style={{ paddingRight: "1rem" }}>
+              Min
+            </option>
             <option value={1200}>1200</option>
             <option value={2000}>2000</option>
             <option value={3000}>3000</option>

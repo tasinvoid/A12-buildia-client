@@ -99,10 +99,10 @@ const Navbar = () => {
     <div
       className="navbar shadow-lg rounded-2xl mb-5 sticky top-0 z-50"
       style={{
-        backgroundColor: "rgba(31, 41, 55, 0.8)", // bg-gray-800 with opacity
-        backdropFilter: "blur(4px)", // backdrop-blur-sm equivalent
-        color: "#F3F4F6", // text-gray-100 for overall navbar
-        borderBottom: "1px solid #374151", // border-gray-700
+        backgroundColor: "rgba(31, 41, 55, 0.8)",
+        backdropFilter: "blur(4px)",
+        color: "#F3F4F6",
+        borderBottom: "1px solid #374151",
       }}
     >
       <div className="navbar-start">
@@ -136,10 +136,10 @@ const Navbar = () => {
             tabIndex={0}
             className="menu menu-sm dropdown-content rounded-box z-[1] mt-3 w-52 p-2 shadow-xl"
             style={{
-              backgroundColor: "rgba(31, 41, 55, 0.8)", // bg-gray-800 with opacity
-              backdropFilter: "blur(4px)", // backdrop-blur-sm equivalent
-              border: "1px solid #374151", // border-gray-700
-              color: "#D1D5DB", // text-gray-300 for dropdown items
+              backgroundColor: "rgba(31, 41, 55, 0.8)",
+              backdropFilter: "blur(4px)",
+              border: "1px solid #374151",
+              color: "#D1D5DB",
             }}
           >
             {navItems}
@@ -159,14 +159,14 @@ const Navbar = () => {
               className="btn btn-outline transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg"
               to="/auth"
               style={{
-                borderColor: "#6366F1", 
-                color: "#818CF8", 
+                borderColor: "#6366F1",
+                color: "#818CF8",
                 backgroundColor: "transparent",
                 boxShadow: "none",
                 "&:hover": {
-                  backgroundColor: "#4F46E5", 
-                  color: "#F3F4F6", 
-                  borderColor: "#4F46E5", 
+                  backgroundColor: "#4F46E5",
+                  color: "#F3F4F6",
+                  borderColor: "#4F46E5",
                   boxShadow: "none",
                 },
               }}
@@ -178,14 +178,14 @@ const Navbar = () => {
               className="btn btn-outline transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg"
               to="/auth/register"
               style={{
-                borderColor: "#6366F1", // border-indigo-500
-                color: "#818CF8", // text-indigo-400
+                borderColor: "#6366F1",
+                color: "#818CF8",
                 backgroundColor: "transparent",
                 boxShadow: "none",
                 "&:hover": {
-                  backgroundColor: "#4F46E5", // bg-indigo-600
-                  color: "#F3F4F6", // text-gray-100
-                  borderColor: "#4F46E5", // border-indigo-600
+                  backgroundColor: "#4F46E5",
+                  color: "#F3F4F6",
+                  borderColor: "#4F46E5",
                   boxShadow: "none",
                 },
               }}
@@ -205,10 +205,7 @@ const Navbar = () => {
               <div className="w-10 rounded-full overflow-hidden">
                 <img
                   alt="User Avatar"
-                  src={
-                    user?.photoURL ||
-                    "https://www.gravatar.com/avatar?d=mp"
-                  }
+                  src={user?.photoURL || "https://www.gravatar.com/avatar?d=mp"}
                 />
               </div>
             </div>
@@ -216,10 +213,10 @@ const Navbar = () => {
               tabIndex={0}
               className="menu menu-sm dropdown-content rounded-box z-[1] mt-3 w-52 p-2 shadow-xl"
               style={{
-                backgroundColor: "rgba(31, 41, 55, 0.8)", // bg-gray-800 with opacity
-                backdropFilter: "blur(4px)", // backdrop-blur-sm equivalent
-                border: "1px solid #374151", // border-gray-700
-                color: "#D1D5DB", // text-gray-300 for dropdown items
+                backgroundColor: "rgba(31, 41, 55, 0.8)",
+                backdropFilter: "blur(4px)",
+                border: "1px solid #374151",
+                color: "#D1D5DB",
               }}
             >
               <li>
@@ -258,12 +255,12 @@ const Navbar = () => {
                   className="btn transition duration-300 ease-in-out transform hover:scale-105"
                   onClick={handleLogOut}
                   style={{
-                    backgroundColor: "#EC4899", // bg-pink-500
+                    backgroundColor: "#EC4899",
                     color: "#F3F4F6",
                     borderColor: "transparent",
                     boxShadow: "none",
                     "&:hover": {
-                      backgroundColor: "#F472B6", // pink-400 on hover
+                      backgroundColor: "#F472B6",
                       color: "#F3F4F6",
                       borderColor: "transparent",
                       boxShadow: "none",

@@ -1,49 +1,43 @@
-import React from 'react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import { motion } from 'framer-motion';
-import L from 'leaflet';
+import React from "react";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { motion } from "framer-motion";
+import L from "leaflet";
 
-// This is a common workaround to fix default marker icon issues with Leaflet in React apps.
-// It ensures the marker icons load correctly from an external URL.
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
-  iconRetinaUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png',
-  iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
-  shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
+  iconRetinaUrl:
+    "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png",
+  iconUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png",
+  shadowUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png",
 });
 
-// Set your apartment's coordinates here. This is an example for Dhaka.
-// Current location information: Dhaka, Dhaka Division, Bangladesh.
-const center = [23.7949, 90.4077]; // Latitude, Longitude for a location in Dhaka
+const center = [23.7949, 90.4077];
 
 const LocationAndDirections = () => {
-  // Framer Motion variants for the main section container
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2, // Stagger animation for immediate children of this container
-        when: "beforeChildren", // Parent animation (fade in) completes before children start
+        staggerChildren: 0.2,
+        when: "beforeChildren",
       },
     },
   };
 
-  // Variants for individual items within the section (like title, paragraphs)
   const itemVariants = {
     hidden: { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
-        type: "spring", // Spring animation for a bouncier feel
+        type: "spring",
         damping: 10,
         stiffness: 100,
       },
     },
   };
 
-  // Variants for the map section specifically (slides in from left)
   const mapVariants = {
     hidden: { opacity: 0, x: -100 },
     visible: {
@@ -56,7 +50,6 @@ const LocationAndDirections = () => {
     },
   };
 
-  // Variants for the details section specifically (slides in from right)
   const detailsVariants = {
     hidden: { opacity: 0, x: 100 },
     visible: {
@@ -69,7 +62,6 @@ const LocationAndDirections = () => {
     },
   };
 
-  // Variants for staggered list items (e.g., "Getting Here" bullets)
   const listItemVariants = {
     hidden: { opacity: 0, x: -20 },
     visible: {
@@ -99,19 +91,19 @@ const LocationAndDirections = () => {
       </motion.h2>
 
       <div className="flex flex-col lg:flex-row items-start justify-between gap-12">
-        {/* Map Section */}
+        {}
         <motion.div
           className="lg:w-2/3 w-full rounded-xl shadow-2xl overflow-hidden"
           variants={mapVariants}
-          style={{ height: '500px' }}
+          style={{ height: "500px" }}
         >
           <MapContainer
             center={center}
             zoom={10}
             scrollWheelZoom={false}
-            style={{ height: '100%', width: '100%' }}
+            style={{ height: "100%", width: "100%" }}
           >
-            {/* Using standard OpenStreetMap tiles for a light mode map */}
+            {}
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -125,7 +117,7 @@ const LocationAndDirections = () => {
           </MapContainer>
         </motion.div>
 
-        {/* Details Section */}
+        {}
         <motion.div
           className="lg:w-1/3 w-full text-center lg:text-left bg-base-100 dark:bg-gray-800 p-8 rounded-xl shadow-lg"
           variants={detailsVariants}
@@ -140,18 +132,22 @@ const LocationAndDirections = () => {
             className="text-lg text-gray-300 dark:text-gray-300 mb-6 leading-relaxed"
             variants={itemVariants}
           >
-            Buildia Towers is strategically situated in the vibrant heart of Dhaka, offering unparalleled access to everything you need. Whether you're commuting to work or exploring the city, our location ensures convenience at every turn.
+            Buildia Towers is strategically situated in the vibrant heart of
+            Dhaka, offering unparalleled access to everything you need. Whether
+            you're commuting to work or exploring the city, our location ensures
+            convenience at every turn.
           </motion.p>
 
           <motion.div className="mb-6" variants={itemVariants}>
-            <h4 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-2">Our Address:</h4>
+            <h4 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-2">
+              Our Address:
+            </h4>
             <p className="text-gray-600 dark:text-gray-400">
-              House #123, Road #45, Block A,<br />
+              House #123, Road #45, Block A,
+              <br />
               Banani, Dhaka, 20890
             </p>
           </motion.div>
-
-         
 
           <motion.a
             href={`http://maps.google.com/?q=${center[0]},${center[1]}`}

@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import React, { useState } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { FaBullhorn, FaPaperPlane, FaSpinner } from 'react-icons/fa';
-import Swal from 'sweetalert2';
-import UseAuth from '../../../hooks/UseAuth';
-import useAxiosSecure from '../../../hooks/useAxiosSecure';
+import { FaBullhorn, FaPaperPlane, FaSpinner } from "react-icons/fa";
+import Swal from "sweetalert2";
+import UseAuth from "../../../hooks/UseAuth";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const MakeAnnouncement = () => {
   const { user, loading: authLoading } = UseAuth();
@@ -12,8 +12,8 @@ const MakeAnnouncement = () => {
   const queryClient = useQueryClient();
 
   const [announcementData, setAnnouncementData] = useState({
-    title: '',
-    description: '',
+    title: "",
+    description: "",
   });
 
   const handleInputChange = (e) => {
@@ -24,34 +24,34 @@ const MakeAnnouncement = () => {
     }));
   };
 
-  
   const addAnnouncementMutation = useMutation({
     mutationFn: async (newAnnouncement) => {
-    
-      const res = await axiosSecure.post('/announcements', newAnnouncement);
+      const res = await axiosSecure.post("/announcements", newAnnouncement);
       return res.data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(['announcements']); 
+      queryClient.invalidateQueries(["announcements"]);
       Swal.fire({
-        icon: 'success',
-        title: 'Announcement Posted!',
-        text: 'Your announcement has been successfully published.',
-        confirmButtonColor: '#4F46E5',
-        background: '#1F2937',
-        color: '#D1D5DB',
+        icon: "success",
+        title: "Announcement Posted!",
+        text: "Your announcement has been successfully published.",
+        confirmButtonColor: "#4F46E5",
+        background: "#1F2937",
+        color: "#D1D5DB",
       });
-      setAnnouncementData({ title: '', description: '' }); 
+      setAnnouncementData({ title: "", description: "" });
     },
     onError: (err) => {
-      console.error('Error posting announcement:', err);
+      console.error("Error posting announcement:", err);
       Swal.fire({
-        icon: 'error',
-        title: 'Failed to Post Announcement!',
-        text: err.response?.data?.message || 'An error occurred while posting the announcement.',
-        confirmButtonColor: '#EC4899',
-        background: '#1F2937',
-        color: '#D1D5DB',
+        icon: "error",
+        title: "Failed to Post Announcement!",
+        text:
+          err.response?.data?.message ||
+          "An error occurred while posting the announcement.",
+        confirmButtonColor: "#EC4899",
+        background: "#1F2937",
+        color: "#D1D5DB",
       });
     },
   });
@@ -60,25 +60,24 @@ const MakeAnnouncement = () => {
     e.preventDefault();
     if (!announcementData.title || !announcementData.description) {
       Swal.fire({
-        icon: 'warning',
-        title: 'Missing Information',
-        text: 'Please provide both a title and description for the announcement.',
-        confirmButtonColor: '#EC4899',
-        background: '#1F2937',
-        color: '#D1D5DB',
+        icon: "warning",
+        title: "Missing Information",
+        text: "Please provide both a title and description for the announcement.",
+        confirmButtonColor: "#EC4899",
+        background: "#1F2937",
+        color: "#D1D5DB",
       });
       return;
     }
- 
+
     addAnnouncementMutation.mutate({
       ...announcementData,
       senderEmail: user?.email,
-      senderName: user?.displayName || 'Admin', 
+      senderName: user?.displayName || "Admin",
       timestamp: new Date().toISOString(),
     });
   };
 
-  // --- Loading State ---
   if (authLoading || addAnnouncementMutation.isPending) {
     return (
       <div className="min-h-screen flex items-center justify-center p-5 bg-gradient-to-br from-gray-950 via-gray-900 to-indigo-950 text-gray-100">
@@ -97,7 +96,10 @@ const MakeAnnouncement = () => {
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label htmlFor="title" className="block text-gray-300 text-lg font-bold mb-2">
+            <label
+              htmlFor="title"
+              className="block text-gray-300 text-lg font-bold mb-2"
+            >
               Announcement Title:
             </label>
             <input
@@ -112,7 +114,10 @@ const MakeAnnouncement = () => {
             />
           </div>
           <div>
-            <label htmlFor="description" className="block text-gray-300 text-lg font-bold mb-2">
+            <label
+              htmlFor="description"
+              className="block text-gray-300 text-lg font-bold mb-2"
+            >
               Description:
             </label>
             <textarea
@@ -135,7 +140,10 @@ const MakeAnnouncement = () => {
                          disabled:opacity-50 disabled:cursor-not-allowed"
               disabled={addAnnouncementMutation.isPending}
             >
-              <FaPaperPlane /> {addAnnouncementMutation.isPending ? 'Publishing...' : 'Publish Announcement'}
+              <FaPaperPlane />{" "}
+              {addAnnouncementMutation.isPending
+                ? "Publishing..."
+                : "Publish Announcement"}
             </button>
           </div>
         </form>

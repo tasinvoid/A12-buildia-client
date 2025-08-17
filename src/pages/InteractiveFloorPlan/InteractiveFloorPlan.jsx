@@ -73,7 +73,7 @@ const Building = () => {
       <div className="absolute bottom-1/4 left-1/4 w-40 h-40 bg-indigo-500 rounded-full mix-blend-lighten blur-3xl opacity-20 z-0 animate-pulse-slow"></div>
 
       <div className="w-full max-w-7xl mx-auto md:grid md:grid-cols-3 md:gap-12 md:items-center">
-        {/* Welcome Section */}
+        {}
         <div className="w-full mb-8 md:mb-0 col-span-1 p-6 rounded-lg backdrop-blur-sm bg-gray-800 bg-opacity-80 text-center md:text-left">
           <p className="text-gray-100 text-lg sm:text-2xl font-bold">
             <Typewriter
@@ -89,7 +89,7 @@ const Building = () => {
           </p>
         </div>
 
-        {/* Building Container */}
+        {}
         <div className="relative w-64 sm:w-80 mx-auto md:mx-0 col-span-1 flex flex-col items-center border-4 border-indigo-500 rounded-sm shadow-xl z-20">
           <div className="w-full text-center py-2 bg-indigo-950 border-b-4 border-indigo-500">
             <h2 className="text-gray-100 font-bold text-lg tracking-widest">
@@ -135,7 +135,7 @@ const Building = () => {
           </div>
         </div>
 
-        {/* Apartment Details Popover */}
+        {}
         {selectedFloor && (
           <div className="w-64 mx-auto mt-8 md:mt-0 col-span-1 p-4 bg-gray-800 bg-opacity-80 backdrop-blur-sm border-4 border-indigo-500 rounded-lg shadow-xl z-30">
             <h3 className="text-gray-100 text-xl font-bold mb-2 text-center">

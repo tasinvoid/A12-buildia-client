@@ -11,12 +11,11 @@ import {
 import { MdOutlineApartment } from "react-icons/md";
 import Swal from "sweetalert2";
 
-import { useQuery, useMutation } from "@tanstack/react-query"; 
+import { useQuery, useMutation } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import UseAuth from "../../../hooks/UseAuth";
 import { FaSpinner } from "react-icons/fa";
 import { useNavigate } from "react-router";
-
 
 const containerVariants = {
   hidden: { opacity: 0, scale: 0.95 },
@@ -44,7 +43,6 @@ const itemVariants = {
 };
 
 const RentPaymentForm = () => {
-  
   const { user } = UseAuth();
   const userEmail = user.email;
   const axiosSecure = useAxiosSecure();
@@ -52,7 +50,6 @@ const RentPaymentForm = () => {
   const currentYear = new Date().getFullYear();
   const navigate = useNavigate();
 
-  
   const months = [
     "January",
     "February",
@@ -68,7 +65,6 @@ const RentPaymentForm = () => {
     "December",
   ];
 
-  
   const {
     data: agreement,
     isLoading,
@@ -77,26 +73,23 @@ const RentPaymentForm = () => {
   } = useQuery({
     queryKey: ["userAgreement", userEmail],
     queryFn: async () => {
-      
       const response = await axiosSecure.get(
         `/userApartmentAgreement?email=${userEmail}`
       );
-      
+
       const activeAgreement = response.data;
       if (!activeAgreement) {
         throw new Error("No active apartment agreement found for this user.");
       }
       return activeAgreement;
     },
-    enabled: !!userEmail, 
-    staleTime: Infinity, 
+    enabled: !!userEmail,
+    staleTime: Infinity,
     cacheTime: Infinity,
   });
 
-  
   const payRentMutation = useMutation({
     mutationFn: async (paymentData) => {
-      
       const response = await axiosSecure.post(
         "/recordRentPayment",
         paymentData
@@ -109,12 +102,12 @@ const RentPaymentForm = () => {
         icon: "success",
         title: "Proceeding to Payment!",
         text: "Your rent payment has been recorded.",
-        confirmButtonColor: "#4F46E5", 
-        background: "#1F2937", 
-        color: "#D1D5DB", 
+        confirmButtonColor: "#4F46E5",
+        background: "#1F2937",
+        color: "#D1D5DB",
       });
       navigate(`/dashBoard/stripePaymentForm/${data.insertedId}`);
-      setSelectedMonth(""); 
+      setSelectedMonth("");
     },
     onError: (error) => {
       console.error("Error recording payment:", error);
@@ -124,7 +117,7 @@ const RentPaymentForm = () => {
         text:
           error.response?.data?.message ||
           "There was an issue processing your payment. Please try again.",
-        confirmButtonColor: "#EC4899", 
+        confirmButtonColor: "#EC4899",
         background: "#1F2937",
         color: "#D1D5DB",
       });
@@ -176,8 +169,8 @@ const RentPaymentForm = () => {
       text: `You are about to pay $${agreement.Rent} for Apartment ${agreement.ApartmentNo}.`,
       icon: "info",
       showCancelButton: true,
-      confirmButtonColor: "#4F46E5", 
-      cancelButtonColor: "#6B7280", 
+      confirmButtonColor: "#4F46E5",
+      cancelButtonColor: "#6B7280",
       confirmButtonText: "Yes, Pay Now!",
       background: "#1F2937",
       color: "#D1D5DB",
@@ -209,7 +202,6 @@ const RentPaymentForm = () => {
     );
   }
 
-  
   if (!agreement) {
     return (
       <div className="min-h-screen flex items-center justify-center p-5 bg-gradient-to-br from-gray-950 via-gray-900 to-indigo-950 bg-[length:200%_200%] overflow-hidden relative text-center">
@@ -244,7 +236,7 @@ const RentPaymentForm = () => {
                  bg-gradient-to-br from-gray-950 via-gray-900 to-indigo-950
                  bg-[length:200%_200%] overflow-hidden relative"
     >
-      {/* Decorative Circles */}
+      {}
       <div className="absolute top-1/4 left-1/4 w-40 h-40 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob"></div>
       <div className="absolute top-1/2 left-1/2 w-48 h-48 bg-indigo-600 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob animation-delay-2000"></div>
       <div className="absolute bottom-1/4 right-1/4 w-52 h-52 bg-pink-400 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob animation-delay-4000"></div>
@@ -262,7 +254,7 @@ const RentPaymentForm = () => {
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Member Email (Read-only) */}
+          {}
           <motion.div variants={itemVariants}>
             <label
               htmlFor="memberEmail"
@@ -280,7 +272,7 @@ const RentPaymentForm = () => {
             />
           </motion.div>
 
-          {/* Floor (Read-only) */}
+          {}
           <motion.div variants={itemVariants}>
             <label
               htmlFor="floor"
@@ -297,7 +289,7 @@ const RentPaymentForm = () => {
             />
           </motion.div>
 
-          {/* Block Name (Read-only) */}
+          {}
           <motion.div variants={itemVariants}>
             <label
               htmlFor="blockName"
@@ -315,7 +307,7 @@ const RentPaymentForm = () => {
             />
           </motion.div>
 
-          {/* Apartment No / Room No (Read-only) */}
+          {}
           <motion.div variants={itemVariants}>
             <label
               htmlFor="apartmentNo"
@@ -333,7 +325,7 @@ const RentPaymentForm = () => {
             />
           </motion.div>
 
-          {/* Rent (Read-only) */}
+          {}
           <motion.div variants={itemVariants}>
             <label
               htmlFor="rent"
@@ -351,7 +343,7 @@ const RentPaymentForm = () => {
             />
           </motion.div>
 
-          {/* Month Selection */}
+          {}
           <motion.div variants={itemVariants}>
             <label
               htmlFor="month"
@@ -378,7 +370,7 @@ const RentPaymentForm = () => {
             </select>
           </motion.div>
 
-          {/* Submit/Pay Button */}
+          {}
           <motion.div variants={itemVariants}>
             <button
               type="submit"
