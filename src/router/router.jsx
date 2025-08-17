@@ -20,6 +20,7 @@ import Announcements from "../pages/DashBoard/announcement/Announcements";
 import CouponInput from "../pages/DashBoard/StripePaymentForm/CheckoutForm/CouponInput";
 import CouponManagement from "../pages/DashBoard/CouponManagement/CouponManagement";
 import InteractiveFloorPlan from "../pages/InteractiveFloorPlan/InteractiveFloorPlan";
+import About from "../pages/About/About";
 
 export let router = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ export let router = createBrowserRouter([
       {
         path: "/interactiveFloorPlan",
         Component: InteractiveFloorPlan,
+      },
+      {
+        path: "/about",
+        Component: About,
       },
     ],
   },

@@ -53,6 +53,20 @@ const Navbar = () => {
           Floor Details
         </NavLink>
       </li>
+      <li>
+        <NavLink
+          to="/about"
+          className={({ isActive }) =>
+            `py-2 px-3 rounded-lg transition duration-300 ease-in-out ${
+              isActive
+                ? "text-indigo-400 font-semibold transform scale-105"
+                : "text-gray-200 hover:text-indigo-400 hover:scale-105 transform"
+            }`
+          }
+        >
+          About
+        </NavLink>
+      </li>
 
       {user && (
         <>
@@ -83,7 +97,7 @@ const Navbar = () => {
 
   return (
     <div
-      className="navbar shadow-lg  relative z-50 rounded-2xl mb-5"
+      className="navbar shadow-lg rounded-2xl mb-5 sticky top-0 z-50"
       style={{
         backgroundColor: "rgba(31, 41, 55, 0.8)", // bg-gray-800 with opacity
         backdropFilter: "blur(4px)", // backdrop-blur-sm equivalent
@@ -145,14 +159,14 @@ const Navbar = () => {
               className="btn btn-outline transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg"
               to="/auth"
               style={{
-                borderColor: "#6366F1", // border-indigo-500
-                color: "#818CF8", // text-indigo-400
+                borderColor: "#6366F1", 
+                color: "#818CF8", 
                 backgroundColor: "transparent",
                 boxShadow: "none",
                 "&:hover": {
-                  backgroundColor: "#4F46E5", // bg-indigo-600
-                  color: "#F3F4F6", // text-gray-100
-                  borderColor: "#4F46E5", // border-indigo-600
+                  backgroundColor: "#4F46E5", 
+                  color: "#F3F4F6", 
+                  borderColor: "#4F46E5", 
                   boxShadow: "none",
                 },
               }}
