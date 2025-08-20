@@ -3,6 +3,7 @@ import { NavLink } from "react-router";
 
 import BuildiaLogo from "../BuildiaLogo";
 import UseAuth from "../../../hooks/UseAuth";
+import ThemeToggleBtn from "./ThemeToggleBtn";
 
 const Navbar = () => {
   const { logOut, user } = UseAuth();
@@ -273,6 +274,7 @@ const Navbar = () => {
             </ul>
           </div>
         )}
+        <ThemeToggleBtn></ThemeToggleBtn>
       </div>
     </div>
   );

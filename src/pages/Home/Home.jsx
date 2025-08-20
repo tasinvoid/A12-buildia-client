@@ -8,6 +8,7 @@ import InteractiveFloorPlan from "../InteractiveFloorPlan/InteractiveFloorPlan";
 import CommentSlider from "./CommentSlider/CommentSlider";
 import Facilities from "./Facilities/Facilities";
 import TeamSection from "./TeamSection/TeamSection";
+import EmailForm from "./EmailForm/EmailForm";
 
 const Home = () => {
   return (
@@ -18,6 +19,7 @@ const Home = () => {
       <LocationAndDirections></LocationAndDirections>
       <CommentSlider></CommentSlider>
       <Facilities></Facilities>
+      <EmailForm></EmailForm>
       <TeamSection></TeamSection>
       <Footer></Footer>
     </div>
