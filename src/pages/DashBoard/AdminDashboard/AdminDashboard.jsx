@@ -25,6 +25,7 @@ import {
 
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import UseAuth from '../../../hooks/UseAuth';
+import PaymentHistoryChart from './PaymentHistoryChart';
 
 const AdminDashboard = () => {
   const { user, loading: authLoading } = UseAuth();
@@ -47,7 +48,7 @@ const AdminDashboard = () => {
 
   const totalRooms = dashboardStats.totalRooms || 0;
   const availableRooms = dashboardStats.availableRooms || 0;
-  const unavailableRooms = dashboardStats.unavailableRooms || 0;
+   const unavailableRooms = totalRooms - availableRooms;
   const totalUsers = dashboardStats.totalUsers || 0;
   const totalMembers = dashboardStats.totalMembers || 0;
 
@@ -170,6 +171,7 @@ const AdminDashboard = () => {
               </ResponsiveContainer>
             </div>
           </div>
+          <PaymentHistoryChart></PaymentHistoryChart>
         </div>
       </div>
     </div>
