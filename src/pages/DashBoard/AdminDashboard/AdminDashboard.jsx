@@ -1,7 +1,28 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
+import {
+  FaUserShield,
+  FaEnvelope,
+  FaBuilding,
+  FaChartPie,
+  FaUsers,
+  FaUserFriends,
+  FaSpinner,
+  FaInfoCircle,
+} from 'react-icons/fa';
+import {
+  PieChart,
+  Pie,
+  Cell,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+} from 'recharts';
 
-import { FaUserShield, FaEnvelope, FaBuilding, FaChartPie, FaUsers, FaUserFriends, FaSpinner, FaInfoCircle } from 'react-icons/fa';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import UseAuth from '../../../hooks/UseAuth';
 
@@ -27,10 +48,21 @@ const AdminDashboard = () => {
   const totalRooms = dashboardStats.totalRooms || 0;
   const availableRooms = dashboardStats.availableRooms || 0;
   const unavailableRooms = dashboardStats.unavailableRooms || 0;
+  const totalUsers = dashboardStats.totalUsers || 0;
+  const totalMembers = dashboardStats.totalMembers || 0;
 
-  const percentageAvailable = totalRooms > 0 ? ((availableRooms / totalRooms) * 100).toFixed(2) : 0;
-  const percentageUnavailable = totalRooms > 0 ? ((unavailableRooms / totalRooms) * 100).toFixed(2) : 0;
+  // Data for the Pie Chart
+  const roomData = [
+    { name: 'Available', value: availableRooms, color: '#818CF8' }, // Tailwind text-indigo-400
+    { name: 'Unavailable', value: unavailableRooms, color: '#F472B6' }, // Tailwind text-pink-400
+  ];
 
+  // Data for the Bar Chart
+  const totalData = [
+    { name: 'Rooms', count: totalRooms, color: '#818CF8' },
+    { name: 'Users', count: totalUsers, color: '#F472B6' },
+    { name: 'Members', count: totalMembers, color: '#EC4899' },
+  ];
 
   if (authLoading || isPending) {
     return (
@@ -44,7 +76,7 @@ const AdminDashboard = () => {
   if (isError) {
     return (
       <div className="min-h-screen flex items-center justify-center p-5 bg-gradient-to-br from-gray-950 via-gray-900 to-indigo-950 text-red-400 text-xl text-center">
-        <p>Error loading dashboard data: {error?.message || "Unknown error"}</p>
+        <p>Error loading dashboard data: {error?.message || 'Unknown error'}</p>
         <p className="text-gray-400 mt-2">Please check your internet connection or try again later.</p>
       </div>
     );
@@ -77,42 +109,66 @@ const AdminDashboard = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <div className="bg-gray-900 p-6 rounded-lg shadow-xl border border-gray-700 text-center">
-            <FaBuilding className="text-indigo-400 text-5xl mx-auto mb-4" />
-            <h4 className="text-gray-300 text-xl font-semibold mb-2">Total Rooms</h4>
-            <p className="text-gray-100 text-4xl font-bold">{dashboardStats.totalRooms || 0}</p>
+          {/* Recharts Pie Chart for Room Availability */}
+          <div className="bg-gray-900 p-6 rounded-lg shadow-xl border border-gray-700 text-center col-span-1 md:col-span-2 lg:col-span-1">
+            <h4 className="text-gray-300 text-xl font-semibold mb-4">Room Availability</h4>
+            <div style={{ width: '100%', height: 250 }}>
+              <ResponsiveContainer>
+                <PieChart>
+                  <Pie
+                    data={roomData}
+                    dataKey="value"
+                    nameKey="name"
+                    cx="50%"
+                    cy="50%"
+                    outerRadius={80}
+                    label
+                  >
+                    {roomData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: 'rgba(31, 41, 55, 0.9)',
+                      border: '1px solid #6B7280',
+                      borderRadius: '8px',
+                      color: '#F3F4F6',
+                    }}
+                    itemStyle={{ color: '#F3F4F6' }}
+                  />
+                  <Legend />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+            <p className="text-gray-400 text-sm mt-4">Total Rooms: {totalRooms}</p>
           </div>
 
-          <div className="bg-gray-900 p-6 rounded-lg shadow-xl border border-gray-700 text-center">
-            <FaChartPie className="text-green-400 text-5xl mx-auto mb-4" />
-            <h4 className="text-gray-300 text-xl font-semibold mb-2">Available Rooms</h4>
-            <p className="text-gray-100 text-4xl font-bold">{percentageAvailable}%</p>
-            <p className="text-gray-400 text-sm mt-1">({dashboardStats.availableRooms || 0} rooms)</p>
-          </div>
-
-          <div className="bg-gray-900 p-6 rounded-lg shadow-xl border border-gray-700 text-center">
-            <FaChartPie className="text-pink-400 text-5xl mx-auto mb-4" />
-            <h4 className="text-gray-300 text-xl font-semibold mb-2">Unavailable Rooms</h4>
-            <p className="text-gray-100 text-4xl font-bold">{percentageUnavailable}%</p>
-            <p className="text-gray-400 text-sm mt-1">({dashboardStats.unavailableRooms || 0} rooms)</p>
-          </div>
-
-          <div className="bg-gray-900 p-6 rounded-lg shadow-xl border border-gray-700 text-center">
-            <FaUsers className="text-indigo-400 text-5xl mx-auto mb-4" />
-            <h4 className="text-gray-300 text-xl font-semibold mb-2">Total Users</h4>
-            <p className="text-gray-100 text-4xl font-bold">{dashboardStats.totalUsers || 0}</p>
-          </div>
-
-          <div className="bg-gray-900 p-6 rounded-lg shadow-xl border border-gray-700 text-center">
-            <FaUserFriends className="text-green-400 text-5xl mx-auto mb-4" />
-            <h4 className="text-gray-300 text-xl font-semibold mb-2">Total Members</h4>
-            <p className="text-gray-100 text-4xl font-bold">{dashboardStats.totalMembers || 0}</p>
-          </div>
-
-          <div className="hidden lg:block bg-gray-900 p-6 rounded-lg shadow-xl border border-gray-700 text-center">
-            <FaInfoCircle className="text-gray-500 text-5xl mx-auto mb-4" />
-            <h4 className="text-gray-400 text-xl font-semibold mb-2">Quick Stats</h4>
-            <p className="text-gray-500 text-sm">More details coming soon.</p>
+          {/* Recharts Bar Chart for Total Counts */}
+          <div className="bg-gray-900 p-6 rounded-lg shadow-xl border border-gray-700 text-center col-span-1 lg:col-span-2">
+            <h4 className="text-gray-300 text-xl font-semibold mb-4">Total Counts</h4>
+            <div style={{ width: '100%', height: 250 }}>
+              <ResponsiveContainer>
+                <BarChart data={totalData}>
+                  <XAxis dataKey="name" tick={{ fill: '#D1D5DB' }} />
+                  <YAxis tick={{ fill: '#D1D5DB' }} />
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: 'rgba(31, 41, 55, 0.9)',
+                      border: '1px solid #6B7280',
+                      borderRadius: '8px',
+                      color: '#F3F4F6',
+                    }}
+                    itemStyle={{ color: '#F3F4F6' }}
+                  />
+                  <Bar dataKey="count">
+                    {totalData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
           </div>
         </div>
       </div>

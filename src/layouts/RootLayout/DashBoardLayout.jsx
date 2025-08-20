@@ -148,7 +148,7 @@ const DashBoardLayout = () => {
             </li>
           )}
           
-          {isAdmin && (
+          
             <li>
               <NavLink
                 to="/dashBoard/adminDashBoard"
@@ -159,10 +159,10 @@ const DashBoardLayout = () => {
                 }
               >
                 <FaUserCheck className="text-gray-400 group-hover:text-indigo-400" />
-                Admin DashBoard
+                Stats
               </NavLink>
             </li>
-          )}
+         
           {isAdmin && (
             <li>
               <NavLink

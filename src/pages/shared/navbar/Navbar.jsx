@@ -274,7 +274,6 @@ const Navbar = () => {
             </ul>
           </div>
         )}
-        <ThemeToggleBtn></ThemeToggleBtn>
       </div>
     </div>
   );
