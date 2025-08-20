@@ -2,8 +2,8 @@ import axios from "axios";
 import React from "react";
 import UseAuth from "./UseAuth";
 const axiosSecure = axios.create({
-  // baseURL: "https://builida-server.vercel.app",
-  baseURL: "http://localhost:3000",
+  baseURL: "https://a12-buildia-server.vercel.app",
+  // baseURL: "http://localhost:3000",
 });
 const useAxiosSecure = () => {
   const { user } = UseAuth();

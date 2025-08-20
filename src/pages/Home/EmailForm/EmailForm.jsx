@@ -28,7 +28,7 @@ const EmailForm = () => {
         setIsSending(true);
 
         try {
-            const response = await fetch('http://localhost:3000/send-email', {
+            const response = await fetch('https://a12-buildia-server.vercel.app/send-email', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
